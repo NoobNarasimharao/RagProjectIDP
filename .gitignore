@@ -1,0 +1,48 @@
+# Environment variables
+.env
+*/.env
+!.env.example
+!*/.env.example
+
+# Python
+__pycache__/
+*/__pycache__/
+**/__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Virtual environments
+venv/
+*/venv/
+env/
+ENV/
+
+# Vector store / embeddings
+chroma_db/
+*/chroma_db/
+
+# PDFs (uploaded/ingested documents - remove if you want to track these)
+pdfs/
+*/pdfs/
+
+# Claude
+.claude/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
