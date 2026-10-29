@@ -5,8 +5,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 OLLAMA_BASE_URL = os.getenv("OLLAMA_BASE_URL", "http://localhost:11434")
-# Use the user's requested model
-OLLAMA_GEN_MODEL = "gemma4:31b-cloud"
+OLLAMA_GEN_MODEL = os.getenv("OLLAMA_GEN_MODEL", "gemma4:31b-cloud")
 
 class LLMService:
     def __init__(self):
@@ -27,10 +26,13 @@ class LLMService:
             context_text += f"--- Source: {source} (Page {page}) ---\n{chunk['text']}\n\n"
 
         prompt = (
-            "You are a textbook assistant. Answer the user's question using ONLY the "
-            "context below. If the context doesn't fully answer it, say what's missing. "
-            "Cite which section/page each part of your answer comes from.\n\n"
-            f"CONTEXT:\n{context_text}\n\n"
+            "You are a helpful, knowledgeable assistant. Answer the user's question "
+            "directly and naturally using your general knowledge. The retrieved textbook "
+            "context is optional supporting information, not a restriction: use it when "
+            "relevant, and correct or supplement it when needed. Do not say that a question "
+            "is not covered just because the context is empty or incomplete. When you use "
+            "a claim from the context, cite its source and page; do not invent citations.\n\n"
+            f"RETRIEVED TEXTBOOK CONTEXT:\n{context_text or '(No relevant textbook context was found.)'}\n\n"
             f"QUESTION: {question}\n\n"
             "ANSWER:"
         )

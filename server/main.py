@@ -108,16 +108,10 @@ async def ask_question(req: AskRequest):
     if req.pdf_name:
         chunks = [c for c in chunks if c['metadata']['source_pdf'] == req.pdf_name]
 
-    if not chunks:
-        return {
-            "answer": "This isn't covered in the textbook.",
-            "sources": []
-        }
-
-    # 2. Generate answer
+    # Generate an answer even when retrieval finds no textbook context.
     answer = llm.generate_answer(req.question, chunks)
 
-    # 3. Format sources
+    # Format sources
     sources = []
     for c in chunks:
         sources.append({
